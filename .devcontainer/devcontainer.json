@@ -1,0 +1,6 @@
+{
+  "name": "china-net",
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
+}
