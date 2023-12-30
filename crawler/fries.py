@@ -12,9 +12,8 @@ class Fries(Crawler):
         self.__url = 'https://github.com/VirgilClyne/GetSomeFries/raw/main/ruleset/ASN.China.list'
 
     def fetch(self) -> None:
-        kk = self.__parse(self._request(self.__url))
-        for x in kk:
-            print(x)
+        raw = self._request(self.__url)
+        self._dump([x for x in self.__parse(raw)])
 
     def __parse(self, raw: str) -> Generator[dict[str, int | str | bool], None, None]:
         for removed, asn, desc in self.__parse_raw(raw):
