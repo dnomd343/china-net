@@ -28,7 +28,10 @@ class Crawler(ABC):
             session = requests.Session()
             adapter = adapters.HTTPAdapter(max_retries=3)
             [session.mount(f'{x}://', adapter) for x in {'http', 'https'}]
-            request = session.get(url, timeout=20, headers={'User-Agent': UA})
+            request = session.get(url, timeout=20, headers={
+                'User-Agent': UA,
+                'Accept-Encoding': 'gzip',
+            })
             request.raise_for_status()
         except Exception as err:
             logger.error(f'Request `{url}` with error -> {err}')
