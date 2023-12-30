@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from .fries import Fries
+from .bgp_he import BgpHe
 
 __all__ = [
-    'Fries'
+    'Fries', 'BgpHe'
 ]
