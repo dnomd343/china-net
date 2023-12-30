@@ -7,4 +7,5 @@ from crawler import *
 if __name__ == '__main__':
     # Fries().fetch()
     # BgpHe().fetch()
-    IPIP().fetch()
+    # IPIP().fetch()
+    IPInfo().fetch()

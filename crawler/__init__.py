@@ -4,7 +4,8 @@
 from .ipip import IPIP
 from .fries import Fries
 from .bgp_he import BgpHe
+from .ipinfo import IPInfo
 
 __all__ = [
-    'IPIP', 'Fries', 'BgpHe'
+    'IPIP', 'Fries', 'BgpHe', 'IPInfo'
 ]
