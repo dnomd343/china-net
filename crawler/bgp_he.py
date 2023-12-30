@@ -14,7 +14,7 @@ class BgpHe(Crawler):
         raw = self._request('https://bgp.he.net/country/CN')
         self._dump([x for x in self.__parse(raw)])
 
-    def __parse(self, raw: str):
+    def __parse(self, raw: str) -> Generator[dict[str, int | str], None, None]:
         for info in self.__parse_raw(raw):
             yield {
                 'asn': info[0],
