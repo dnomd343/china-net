@@ -9,10 +9,9 @@ from typing import Generator
 class Fries(Crawler):
     def __init__(self):
         super().__init__('Fries')
-        self.__url = 'https://github.com/VirgilClyne/GetSomeFries/raw/main/ruleset/ASN.China.list'
 
     def fetch(self) -> None:
-        raw = self._request(self.__url)
+        raw = self._request('https://github.com/VirgilClyne/GetSomeFries/raw/main/ruleset/ASN.China.list')
         self._dump([x for x in self.__parse(raw)])
 
     def __parse(self, raw: str) -> Generator[dict[str, int | str | bool], None, None]:
