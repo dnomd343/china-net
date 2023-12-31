@@ -8,7 +8,7 @@ from netaddr import IPNetwork
 
 class CZ88(Crawler):
     def __init__(self):
-        super().__init__('CZ88')
+        super().__init__('cz88')
 
     def fetch(self) -> None:
         raw = self._request('https://github.com/metowolf/iplist/raw/master/data/country/CN.txt')
