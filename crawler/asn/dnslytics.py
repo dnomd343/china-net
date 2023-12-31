@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from .utils import Crawler
+from ..utils import Crawler
 from typing import Generator
 
 
