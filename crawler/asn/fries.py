@@ -28,7 +28,7 @@ class Fries(Crawler):
         for line in raw.splitlines():
             if line.startswith('IP-ASN'):
                 if match := re.match(r'^IP-ASN, *(\d+) *//(.+)$', line):
-                    yield True, int(match[1]), match[2].strip()
+                    yield False, int(match[1]), match[2].strip()
             elif line.startswith('# IP-ASN'):
                 if match := re.match(r'^# *IP-ASN, *(\d+) *//(.+)$', line):
-                    yield False, int(match[1]), match[2].strip()
+                    yield True, int(match[1]), match[2].strip()
