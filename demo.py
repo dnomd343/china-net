@@ -8,5 +8,6 @@ if __name__ == '__main__':
     kk = AsnUnion()
     for x in kk.export():
         # x.desc
-        # x.is_active
-        x.rank
+        # x.v4_active
+        x.v6_active
+        # x.rank
