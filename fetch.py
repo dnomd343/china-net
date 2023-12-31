@@ -16,4 +16,5 @@ if __name__ == '__main__':
 
     # fetch(geoip.IPIP)
     # fetch(geoip.CZ88)
-    fetch(geoip.ChnRoute2)
+    # fetch(geoip.ChnRoute2)
+    fetch(geoip.OperatorIP)
