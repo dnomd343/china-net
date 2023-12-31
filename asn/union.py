@@ -11,12 +11,12 @@ from .origin import AsnOrigin
 class AsnUnion:
     def __init__(self):
         self.__asns = {}
-        self.__apply_ipip()
+        # self.__apply_ipip()
         # self.__apply_fries()
         # self.__apply_bgp_he()
         # self.__apply_ipinfo()
         # self.__apply_bgp_view()
-        # self.__apply_dnslytics()
+        self.__apply_dnslytics()
 
     def __get_asn(self, asn: int) -> ASN:
         return self.__asns[asn]
@@ -60,19 +60,53 @@ class AsnUnion:
 
     def __apply_bgp_he(self) -> None:
         """ Apply ASN upstream data of *BgpHe*. """
-        data = self.__load_data(AsnOrigin.BgpHe)
+        origin = AsnOrigin.BgpHe
+        for asn, info in self.__load_data(origin).items():
+            asn = self.__get_asn(asn)
+            asn.add_desc(origin, info['desc'])
+            if info['v4-adjacency'] == 0 or info['v4-route'] == 0:
+                asn.mark_v4_inactive(origin)
+            if info['v6-adjacency'] == 0 or info['v6-route'] == 0:
+                asn.mark_v6_inactive(origin)
 
     def __apply_ipinfo(self) -> None:
         """ Apply ASN upstream data of *IPInfo*. """
-        data = self.__load_data(AsnOrigin.IPInfo)
+        origin = AsnOrigin.IPInfo
+        data = self.__load_data(origin)
+        max_rank = math.log2(max([x['num'] for x in data.values()]))
+        for asn, info in data.items():
+            asn = self.__get_asn(asn)
+            asn.add_desc(origin, info['desc'])
+            if info['type'] == 'inactive':
+                asn.mark_inactive(origin)
+            if info['num'] == 0:
+                asn.mark_inactive(origin)
+                asn.add_rank(origin, 0)
+            else:
+                asn.add_rank(origin, math.log2(info['num']) / max_rank)
 
     def __apply_bgp_view(self) -> None:
         """ Apply ASN upstream data of *BgpView*. """
-        data = self.__load_data(AsnOrigin.BgpView)
+        origin = AsnOrigin.BgpView
+        for asn, info in self.__load_data(origin).items():
+            asn = self.__get_asn(asn)
+            asn.add_desc(origin, info['desc'])
+            if info['v4-prefix'] == 0 or info['v4-peer'] == 0:
+                asn.mark_v4_inactive(origin)
+            if info['v6-prefix'] == 0 or info['v6-peer'] == 0:
+                asn.mark_v6_inactive(origin)
 
     def __apply_dnslytics(self) -> None:
         """ Apply ASN upstream data of *DNSlytics*. """
-        data = self.__load_data(AsnOrigin.DNSlytics)
+        origin = AsnOrigin.DNSlytics
+        data = self.__load_data(origin)
+        for asn, info in data.items():
+            asn = self.__get_asn(asn)
+            asn.add_desc(origin, info['desc'])
+            if info['v4-prefix'] == 0:
+                asn.mark_v4_inactive(origin)
+            if info['v6-prefix'] == 0:
+                asn.mark_v6_inactive(origin)
 
     def __load_data(self, origin: AsnOrigin) -> dict[int, dict[str, int | str | bool]]:
         raw = open(f'release/raw/{origin.name}.json').read()

@@ -24,10 +24,14 @@ class ASN:
         # print(self.__asn)
         pass
 
+    def add_rank(self, origin: AsnOrigin, rank: float) -> None:
+        # print(self.__asn, rank)
+        pass
+
     def add_v4_rank(self, origin: AsnOrigin, rank: float) -> None:
         # print(self.__asn, rank)
         pass
 
     def add_v6_rank(self, origin: AsnOrigin, rank: float) -> None:
-        print(self.__asn, rank)
-        # pass
+        # print(self.__asn, rank)
+        pass
