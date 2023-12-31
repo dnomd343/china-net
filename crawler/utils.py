@@ -44,7 +44,7 @@ class Crawler(ABC):
         logger.info(f'Crawler `{self.__name}` request `{url}` -> {len(request.text)} bytes')
         return request.text
 
-    def _dump(self, data: list[dict]) -> None:
+    def _dump(self, data: list[str | dict]) -> None:
         logger.info(f'Crawler `{self.__name}` fetch complete -> {len(data)} items')
         dump_file = os.path.join('release/raw/', f'{self.__name}.json')
         os.makedirs('release/raw/', exist_ok=True)

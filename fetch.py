@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from crawler import asn
+from crawler import geoip
 
 
 def fetch(*impls) -> None:
@@ -9,6 +10,8 @@ def fetch(*impls) -> None:
 
 
 if __name__ == '__main__':
-    fetch(asn.Fries, asn.BgpHe, asn.IPIP)
+    # fetch(asn.Fries, asn.BgpHe, asn.IPIP)
     # fetch(asn.IPInfo)
     # fetch(asn.DNSlytics)
+
+    fetch(geoip.IPIP)
