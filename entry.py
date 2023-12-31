@@ -8,4 +8,5 @@ if __name__ == '__main__':
     # Fries().fetch()
     # BgpHe().fetch()
     # IPIP().fetch()
-    IPInfo().fetch()
+    # IPInfo().fetch()
+    DNSlytics().fetch()
