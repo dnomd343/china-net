@@ -5,4 +5,8 @@ from asn.union import AsnUnion
 
 
 if __name__ == '__main__':
-    AsnUnion()
+    kk = AsnUnion()
+    for x in kk.export():
+        # x.desc
+        # x.is_active
+        x.rank
