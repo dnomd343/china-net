@@ -7,7 +7,5 @@ from asn.union import AsnUnion
 if __name__ == '__main__':
     kk = AsnUnion()
     for x in kk.export():
-        # x.desc
-        # x.v4_active
-        x.v6_active
-        # x.rank
+        # print(x.desc)
+        print(x.asn, '->', x.v4_active, ' | ', x.v6_active, ' | ', x.rank)

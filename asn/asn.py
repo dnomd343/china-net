@@ -9,15 +9,15 @@ class ASN:
         self.__asn = asn
         self.__desc = {}
 
+        self.__rank = {}
+        self.__v4_rank = {}
+        self.__v6_rank = {}
+
         self.__active = []
         self.__v4_active = []
         self.__v6_active = []
         self.__v4_inactive = []
         self.__v6_inactive = []
-
-        self.__rank = {}
-        self.__v4_rank = {}
-        self.__v6_rank = {}
 
     @property
     def asn(self) -> int:
@@ -69,12 +69,24 @@ class ASN:
 
     @property
     def rank(self) -> float:
-        print(
-            [f'{x.name} - {y}' for x, y in self.__rank.items()],
-            [f'{x.name} - {y}' for x, y in self.__v4_rank.items()],
-            [f'{x.name} - {y}' for x, y in self.__v6_rank.items()],
-        )
-        return 0
+        if not self.v4_active and not self.v6_active:  # no ranking necessary
+            return 0
+
+        rank_46 = None
+        cal_avg = lambda x: None if len(x) == 0 else sum(x) / len(x)
+        rank_v4 = cal_avg(self.__v4_rank.values())
+        rank_v6 = cal_avg(self.__v6_rank.values())
+        if rank_v4 is not None and rank_v6 is not None:
+            rank_46 = rank_v4 * 0.8 + rank_v6 * 0.2
+
+        rank = cal_avg(self.__rank.values())
+        if rank is not None and rank_46 is not None:
+            return rank * 0.3 + rank_46 * 0.7
+        elif rank is None and rank_46 is not None:
+            return rank_46
+        elif rank is not None and rank_46 is None:
+            return rank
+        return 0.1
 
     def add_desc(self, origin: AsnOrigin, desc: str) -> None:
         desc = desc.strip()
