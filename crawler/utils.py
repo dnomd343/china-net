@@ -4,10 +4,9 @@
 import os
 import sys
 import json
-import requests
+import httpx
 from abc import ABC
 from logger import logger
-from requests import adapters
 from abc import abstractmethod
 
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
@@ -16,22 +15,28 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/4
 class Crawler(ABC):
     def __init__(self, name: str):
         self.__name = name
+        transport = httpx.HTTPTransport(retries=3, http2=True)
+        self.__client = httpx.Client(transport=transport)
         logger.info(f'Create new crawler -> `{name}`')
 
     @abstractmethod
     def fetch(self) -> None:
         """ Fetch remote assets and dump as JSON format. """
 
-    def _request(self, url: str) -> str:
+    def _request(self, url: str, post: dict | None = None) -> str:
         logger.debug(f'Crawler `{self.__name}` send http request -> `{url}`')
+        http_args = {
+            'timeout': 20,
+            'headers': {
+                'User-Agent': UA
+            },
+            'follow_redirects': True
+        }
         try:
-            session = requests.Session()
-            adapter = adapters.HTTPAdapter(max_retries=3)
-            [session.mount(f'{x}://', adapter) for x in {'http', 'https'}]
-            request = session.get(url, timeout=20, headers={
-                'User-Agent': UA,
-                'Accept-Encoding': 'gzip',
-            })
+            if post is None:  # send GET request
+                request = self.__client.get(url, **http_args)
+            else:
+                request = self.__client.post(url, json=post, **http_args)
             request.raise_for_status()
         except Exception as err:
             logger.error(f'Request `{url}` with error -> {err}')
