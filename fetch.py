@@ -14,4 +14,5 @@ if __name__ == '__main__':
     # fetch(asn.IPInfo)
     # fetch(asn.DNSlytics)
 
-    fetch(geoip.IPIP)
+    # fetch(geoip.IPIP)
+    fetch(geoip.CZ88)
