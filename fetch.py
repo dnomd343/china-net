@@ -10,11 +10,5 @@ def fetch(*impls) -> None:
 
 
 if __name__ == '__main__':
-    # fetch(asn.Fries, asn.BgpHe, asn.IPIP)
-    # fetch(asn.IPInfo)
-    # fetch(asn.DNSlytics)
-
-    # fetch(geoip.IPIP)
-    # fetch(geoip.CZ88)
-    # fetch(geoip.ChnRoute2)
-    fetch(geoip.OperatorIP)
+    fetch(asn.Fries, asn.BgpHe, asn.IPIP, asn.IPInfo, asn.DNSlytics)
+    fetch(geoip.IPIP, geoip.CZ88, geoip.ChnRoute2, geoip.OperatorIP)
